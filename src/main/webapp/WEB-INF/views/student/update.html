@@ -21,14 +21,6 @@
   <h1>Update student</h1>
   <form method="post" th:object="${student}" enctype="multipart/form-data">
     <div class="mb-3">
-      <label for="name" class="form-label">Id</label>
-      <input type="number" class="form-control" th:field="*{id}" id="id">
-      <div class="mb-3">
-        <label for="image" class="form-label">Image</label>
-        <input type="file" class="form-control" th:field="*{image}" id="image">
-      </div>
-    </div>
-    <div class="mb-3">
       <label for="name" class="form-label">Name</label>
       <input type="text" class="form-control" th:field="*{name}" id="name">
     </div>
@@ -45,6 +37,10 @@
       <select class="form-control" th:field="*{classroom}" id="classroom">
         <option th:each="e : ${classroom}" th:value="${e.id}" th:text="${e.name}"></option>
       </select>
+    </div>
+    <div class="mb-3">
+      <label for="image" class="form-label">Image</label>
+      <input type="file" class="form-control" th:field="*{image}" id="image">
     </div>
     <div class="mb-3">
       <button class="btn btn-primary">Update</button>&nbsp;

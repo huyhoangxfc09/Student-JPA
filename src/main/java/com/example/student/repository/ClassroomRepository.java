@@ -14,18 +14,18 @@ public class ClassroomRepository implements IClassroomRepository {
     public List<Classroom> findAll() {
         TypedQuery<Classroom> query = em.createQuery("select c from Classroom c", Classroom.class);
         return query.getResultList();
-
     }
 
     @Override
     public Classroom findById(Long id) {
-        TypedQuery<Classroom> query = em.createQuery("select c from Classroom c where  c.id=:id", Classroom.class);
-        query.setParameter("id", id);
-        try {
-            return query.getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }
+//        TypedQuery<Classroom> query = em.createQuery("select c from Classroom c where  c.id=:id", Classroom.class);
+//        query.setParameter("id", id);
+//        try {
+//            return query.getSingleResult();
+//        } catch (NoResultException e) {
+//            return null;
+//        }
+        return em.find(Classroom.class,id);
     }
 
     @Override

@@ -1,8 +1,6 @@
 package com.example.student.controller;
 
 import com.example.student.model.Student;
-import com.example.student.model.StudentForm;
-import com.example.student.service.ICrudService;
 import com.example.student.service.impl.IClassroomService;
 import com.example.student.service.impl.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +20,6 @@ import java.util.List;
 @Controller
 @RequestMapping("students")
 public class StudentController {
-    @Value("${file-upload}")
-    private String fileUpload;
     @Autowired
     private IClassroomService classroomService;
     @Autowired
@@ -37,24 +33,32 @@ public class StudentController {
     @GetMapping("/create")
     private ModelAndView createForm(){
         ModelAndView modelAndView = new ModelAndView("student/create");
-        modelAndView.addObject("studentForm",new StudentForm());
+        modelAndView.addObject("student",new Student());
         modelAndView.addObject("classroom",classroomService.findAll());
         return modelAndView;
     }
     @PostMapping("/create")
-    private String createStudent(@ModelAttribute StudentForm studentForm, RedirectAttributes attributes){
-        MultipartFile multipartFile = studentForm.getImage();
-        String fileName = multipartFile.getOriginalFilename();
-        try {
-            FileCopyUtils.copy(studentForm.getImage().getBytes(), new File(fileUpload + fileName));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        Student student = new Student(studentForm.getId(),fileName, studentForm.getName(),studentForm.getAge(),
-                studentForm.getAddress(),studentForm.getClassroom()
-                );
+    private String createStudent(@ModelAttribute Student student, RedirectAttributes attributes){
         studentService.create(student);
         attributes.addFlashAttribute("message","Tạo mới thành công");
+        return "redirect:/students";
+    }
+    @GetMapping("/update/{id}")
+    private ModelAndView updateForm(@PathVariable("id")Long id){
+        ModelAndView modelAndView = new ModelAndView("student/update");
+        modelAndView.addObject("student",studentService.findById(id));
+        modelAndView.addObject("classroom",classroomService.findAll());
+        return modelAndView;
+    }
+    @PostMapping("/update/{id}")
+    private String updateStudent(@ModelAttribute Student student, RedirectAttributes attributes){
+        studentService.update(student);
+        attributes.addFlashAttribute("message","Update thành công");
+        return "redirect:/students";
+    }
+    @GetMapping("/delete/{id}")
+    private String deleteClassroom(@PathVariable("id")Long id){
+        studentService.remove(id);
         return "redirect:/students";
     }
    

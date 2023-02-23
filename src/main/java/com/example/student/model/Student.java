@@ -9,18 +9,28 @@ import javax.persistence.*;
 public class Student {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
+    private Long id;
+    @Column
     private String imagePath;
+    @Column
+
     private String name;
+    @Column
+
     private int age;
+    @Column
+
     private String address;
+
     @ManyToOne
     private Classroom classroom;
+    @Transient
+    private MultipartFile image;
 
     public Student() {
     }
 
-    public Student(int id, String imagePath, String name, int age, String address, Classroom classroom) {
+    public Student(Long id, String imagePath, String name, int age, String address, Classroom classroom) {
         this.id = id;
         this.imagePath = imagePath;
         this.name = name;
@@ -29,11 +39,30 @@ public class Student {
         this.classroom = classroom;
     }
 
-    public int getId() {
+    public Student(Long id, String imagePath, String name, int age, String address, Classroom classroom, MultipartFile image) {
+        this.id = id;
+        this.imagePath = imagePath;
+        this.name = name;
+        this.age = age;
+        this.address = address;
+        this.classroom = classroom;
+        this.image = image;
+    }
+
+    public Student(String imagePath, String name, int age, String address, Classroom classroom, MultipartFile image) {
+        this.imagePath = imagePath;
+        this.name = name;
+        this.age = age;
+        this.address = address;
+        this.classroom = classroom;
+        this.image = image;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -75,5 +104,13 @@ public class Student {
 
     public void setClassroom(Classroom classroom) {
         this.classroom = classroom;
+    }
+
+    public MultipartFile getImage() {
+        return image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
     }
 }

@@ -157,6 +157,7 @@ public class AppConfiguration implements WebMvcConfigurer, ApplicationContextAwa
                 .addResourceLocations("file:" + fileUpload);
 
     }
+    //formatter
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(new ClassroomFormatter(applicationContext.getBean(ClassroomServiceImpl.class)));
