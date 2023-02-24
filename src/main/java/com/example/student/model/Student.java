@@ -22,7 +22,7 @@ public class Student {
 
     private String address;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Classroom classroom;
     @Transient
     private MultipartFile image;

@@ -1,6 +1,7 @@
 package com.example.student.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "classroom")
@@ -9,6 +10,14 @@ public class Classroom {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @OneToMany(mappedBy = "classroom",cascade = CascadeType.REMOVE)
+    private List<Student> students;
+
+    public Classroom(Long id, String name, List<Student> students) {
+        this.id = id;
+        this.name = name;
+        this.students = students;
+    }
 
     public Classroom(Long id, String name) {
         this.id = id;
